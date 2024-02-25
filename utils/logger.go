@@ -8,7 +8,8 @@ import (
 // LogFile defines the path to the log file.
 const LogFile = "./url-shortening-service.log"
 
-var Logger *log.Logger
+var Logger = log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile)
+
 
 func InitLogger() {
 	file, err := os.OpenFile(LogFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)

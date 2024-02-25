@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"net/url"
 	"time"
 	"url-shortening-service/models"
 	"url-shortening-service/utils"
@@ -18,6 +19,12 @@ func CreateShortURL(c *gin.Context, db *gorm.DB) {
 	}
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	// Validate the URL
+	if _, err := url.ParseRequestURI(input.LongURL); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid URL format"})
 		return
 	}
 
