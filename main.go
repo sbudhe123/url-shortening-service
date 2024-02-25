@@ -30,6 +30,7 @@ func main() {
 	// Define routes and respective handlers for serving request
 	r.POST("/create", func(c *gin.Context) { handlers.CreateShortURL(c, db) })
 	r.GET("/:shortURL", func(c *gin.Context) { handlers.RedirectURL(c, db) })
+	r.DELETE("/delete/:shortURL", func(c *gin.Context) { handlers.DeleteURL(c, db) })
 
 	// staret the server
 	r.Run(":8080")

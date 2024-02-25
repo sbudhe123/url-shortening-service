@@ -58,3 +58,18 @@ func RedirectURL(c *gin.Context, db *gorm.DB) {
 
 	c.Redirect(http.StatusMovedPermanently, url.LongURL)
 }
+
+// DeleteURL - Deletes a short URL
+func DeleteURL(c *gin.Context, db *gorm.DB) {
+	// Extract the short URL identifier from the request parameters.
+	shortURL := c.Param("shortURL")
+
+	// Delete short url from the database
+	if result := db.Where("short_url = ?", shortURL).Delete(&models.URL{}); result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not delete URL"})
+		return
+	}
+
+	utils.Logger.Println("Deleted short URL:", shortURL)
+	c.JSON(http.StatusOK, gin.H{"message": "URL deleted"})
+}
