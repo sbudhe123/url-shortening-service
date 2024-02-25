@@ -15,7 +15,7 @@ func CreateShortURL(c *gin.Context, db *gorm.DB) {
 	// Extract request json body to get LongURL value
 	var input struct {
 		LongURL string `json:"longURL"`
-		Expiry   string `json:"expiry"`
+		Expiry   string `json:"expiry,omitempty"`
 	}
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
