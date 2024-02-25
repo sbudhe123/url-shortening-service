@@ -31,6 +31,7 @@ func main() {
 	r.POST("/create", func(c *gin.Context) { handlers.CreateShortURL(c, db) })
 	r.GET("/:shortURL", func(c *gin.Context) { handlers.RedirectURL(c, db) })
 	r.DELETE("/delete/:shortURL", func(c *gin.Context) { handlers.DeleteURL(c, db) })
+	r.GET("/metrics/:shortURL", func(c *gin.Context) { handlers.URLMetrics(c, db) })
 
 	// staret the server
 	r.Run(":8080")
